@@ -10,12 +10,9 @@ const crypto = require('crypto');
 const { promisify } = require('util');
 const inquirer = require('inquirer');
 const { execSync } = require('child_process');
-
 const randomBytesAsync = promisify(crypto.randomBytes);
-
 const configPath = path.join(__dirname, '..', 'config', 'config.json');
 const mediaFilePath = path.join(__dirname, '..', 'media');
-
 const colors = require('colors/safe');
 
 (async () => {
@@ -26,52 +23,61 @@ const colors = require('colors/safe');
           type: 'confirm',
           name: 'clear',
           message: 'config.json is found. Do you want to clear the data of your wiki?',
-          default: false,
-        },
+          default: false
+        }
       ]);
       if (!answers.clear) {
         return;
       }
     }
+    
     const { createDbUser, createDatabase } = await inquirer.prompt([
       {
         type: 'confirm',
         name: 'createDatabase',
         message: 'Do you want to create new database?',
-        default: true,
+        default: true
       },
       {
         type: 'confirm',
         name: 'createDbUser',
         message: 'Do you want to create mysql user?',
-        default: true,
-      },
+        default: true
+      }
     ]);
-    const { dbName, dbUsername, dbPassword } = await inquirer.prompt([
+    
+    const { dbName, dbUsername, dbPassword, rootPassword } = await inquirer.prompt([
       {
         type: 'input',
         name: 'dbName',
-        message: 'database name',
+        message: 'database name'
       },
       {
         type: 'input',
         name: 'dbUsername',
-        message: 'database username',
+        message: 'database username'
       },
       {
         type: 'password',
         name: 'dbPassword',
-        message: 'database password',
+        message: 'database password'
       },
+      {
+        type: 'password',
+        name: 'rootPassword',
+        message: 'database root password'
+      }
     ]);
+    
     if (createDatabase) {
-      execSync(`sudo mysql -e "create database ${dbName};"`);
+      execSync(`sudo mysql -uroot -p${rootPassword} -e "create database ${dbName};"`);
     }
     if (createDbUser) {
-      execSync(`sudo mysql -e "create user '${dbUsername}'@'localhost' identified by '${dbPassword}';"`);
+      execSync(`sudo mysql -uroot -p${rootPassword} -e "create user '${dbUsername}'@'localhost' identified by '${dbPassword}';"`);
     }
-    execSync(`sudo mysql -e "grant all privileges on ${dbName}.* to '${dbUsername}'@'localhost';"`);
-    execSync('sudo mysql -e "flush privileges;"');
+    execSync(`sudo mysql -uroot -p${rootPassword} -e "grant all privileges on ${dbName}.* to '${dbUsername}'@'localhost';"`);
+    execSync('sudo mysql -uroot -p${rootPassword} -e "flush privileges;"');
+    
     console.log(colors.green('User/DB setup is complete.'));
     const answers = await inquirer.prompt([
       {
