@@ -13,10 +13,11 @@
 - [TODO](#todo)
 
 ## Requirements
-- The **latest** version (8+) of Node.js
+- Git
+- 8.x LTS version of Node.js
 - MariaDB version 10+
-  - Mroonga storage engine for fulltext search. `sudo apt install mariadb-plugin-mroonga`
-- Nginx
+  - Mroonga storage engine for fulltext search.
+- Nginx or Apache(Installer only supports Nginx on Ubuntu)
 - Redis (optional)
 
 ## Installation (Ubuntu / Debian)
@@ -29,6 +30,107 @@ sudo apt install nginx
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt install nodejs
 # install LibertyEngine
+git clone https://github.com/librewiki/liberty-engine.git
+cd liberty-engine
+npm i
+npm run setup
+```
+
+## Installation (CentOS)
+NOTE: Untested yet!
+
+### Install MariaDB 10.x
+CentOS's MariaDB's version is 5.x, so you should add repo to install MariaDB 10+ at CentOS.
+
+#### Step 1.Remove MariaDB 5.x (If installed)
+```bash
+yum remove mariadb-server mariadb-libs
+```
+
+#### Step 2. Create Repo file
+Use [This link](https://downloads.mariadb.org/mariadb/repositories) to create repofile.
+Below are some examples
+
+'''CentOS 7 x86_64'''
+```
+# MariaDB 10.1 CentOS repository list - created 2018-03-24 12:05 UTC
+# http://downloads.mariadb.org/mariadb/repositories/
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.1/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+```
+
+'''CentOS 6 x86_64'''
+```
+# MariaDB 10.1 CentOS repository list - created 2018-03-24 12:05 UTC
+# http://downloads.mariadb.org/mariadb/repositories/
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.1/centos6-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+```
+
+'''CentOS 6 x86'''
+```
+# MariaDB 10.0 CentOS repository list - created 2018-03-24 12:06 UTC
+# http://downloads.mariadb.org/mariadb/repositories/
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.0/centos6-x86
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+```
+
+Save to `/etc/yum.repos.d/MariaDB.repo`
+
+#### Step 3. Install MariaDB
+```bash
+sudo yum install MariaDB-server MariaDB-client
+```
+
+### Install MariaDB Mroonga Plugin
+```bash
+sudo yum install -y https://packages.groonga.org/centos/groonga-release-1.4.0-1.noarch.rpm
+sudo systemctl start mariadb
+sudo yum install -y --enablerepo=epel mariadb-10.1-mroonga
+```
+
+### Install Nginx and enable server block file
+#### Step 1. Add nginx repo
+'''CentOS 7'''
+```bash
+sudo rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+```
+
+'''CentOS 6'''
+```bash
+sudo rpm -Uvh http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+```
+
+#### Step 2. Install Nginx & Configure server block
+```bash
+sudo yum install nginx
+sudo mkdir /etc/nginx/sites-available
+sudo mkdir /etc/nginx/sites-enabled
+```
+
+Add following two lines at bottom of `nginx.conf` file
+```nginx
+include /etc/nginx/sites-enabled/*.conf;
+server_names_hash_bucket_size 64;
+```
+
+### Install Node.JS
+```bash
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt install nodejs
+```
+
+### Install and setup LibertyEngine
+```bash
 git clone https://github.com/librewiki/liberty-engine.git
 cd liberty-engine
 npm i
