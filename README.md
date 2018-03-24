@@ -76,11 +76,11 @@ gpgcheck=1
 
 **CentOS 6 x86**
 ```
-# MariaDB 10.0 CentOS repository list - created 2018-03-24 12:06 UTC
+# MariaDB 10.1 CentOS repository list - created 2018-03-24 12:21 UTC
 # http://downloads.mariadb.org/mariadb/repositories/
 [mariadb]
 name = MariaDB
-baseurl = http://yum.mariadb.org/10.0/centos6-x86
+baseurl = http://yum.mariadb.org/10.1/centos6-x86
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 ```
