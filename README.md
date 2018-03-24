@@ -6,6 +6,7 @@
 ## Table of Contents
 - [Requirements](#requirements)
 - [Installation (Ubuntu / Debian)](#installation-ubuntu-debian)
+- [Installation (CentOS)](#installation-centos)
 - [Start](#start)
 - [Stop](#stop)
 - [Upgrade](#upgrade)
