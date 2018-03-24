@@ -52,7 +52,7 @@ yum remove mariadb-server mariadb-libs
 Use [This link](https://downloads.mariadb.org/mariadb/repositories) to create repofile.
 Below are some examples
 
-'''CentOS 7 x86_64'''
+**CentOS 7 x86_64**
 ```
 # MariaDB 10.1 CentOS repository list - created 2018-03-24 12:05 UTC
 # http://downloads.mariadb.org/mariadb/repositories/
@@ -63,7 +63,7 @@ gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 ```
 
-'''CentOS 6 x86_64'''
+**CentOS 6 x86_64**
 ```
 # MariaDB 10.1 CentOS repository list - created 2018-03-24 12:05 UTC
 # http://downloads.mariadb.org/mariadb/repositories/
@@ -74,7 +74,7 @@ gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 ```
 
-'''CentOS 6 x86'''
+**CentOS 6 x86**
 ```
 # MariaDB 10.0 CentOS repository list - created 2018-03-24 12:06 UTC
 # http://downloads.mariadb.org/mariadb/repositories/
@@ -101,12 +101,12 @@ sudo yum install -y --enablerepo=epel mariadb-10.1-mroonga
 
 ### Install Nginx and enable server block file
 #### Step 1. Add nginx repo
-'''CentOS 7'''
+**CentOS 7**
 ```bash
 sudo rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
 ```
 
-'''CentOS 6'''
+**CentOS 6**
 ```bash
 sudo rpm -Uvh http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
 ```
