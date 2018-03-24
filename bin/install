@@ -190,15 +190,25 @@ const colors = require('colors/safe');
       .forEach((file) => {
         unlinkSync(path.join(mediaFilePath, 'temp', file));
       });
-    const nginxTemplate = readFileSync(path.join(__dirname, 'nginx-template'), 'utf8');
-    const nginxConfig = nginxTemplate
-      .replace(/\{\{server_name\}\}/g, answers.wikiDomain)
-      .replace(/\{\{root_path\}\}/g, path.join(__dirname, '..'));
-    const tempPath = path.join(__dirname, 'libertyengine');
-    if (existsSync(tempPath)) unlinkSync(tempPath);
-    writeFileSync(tempPath, nginxConfig);
-    execSync(`sudo rm -f /etc/nginx/sites-available/libertyengine && sudo rm -f /etc/nginx/sites-enabled/libertyengine && sudo mv ${tempPath} /etc/nginx/sites-available && sudo ln -s /etc/nginx/sites-available/libertyengine /etc/nginx/sites-enabled/libertyengine`);
-    execSync('sudo service nginx reload');
+    const { createNginx } = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'createNginx',
+        message: 'Do you want to create nginx site config(only works on Ubuntu)?',
+        default: true
+      }
+    ]);
+    if(createNginx) {
+      const nginxTemplate = readFileSync(path.join(__dirname, 'nginx-template'), 'utf8');
+      const nginxConfig = nginxTemplate
+        .replace(/\{\{server_name\}\}/g, answers.wikiDomain)
+        .replace(/\{\{root_path\}\}/g, path.join(__dirname, '..'));
+      const tempPath = path.join(__dirname, 'libertyengine');
+      if (existsSync(tempPath)) unlinkSync(tempPath);
+      writeFileSync(tempPath, nginxConfig);
+      execSync(`sudo rm -f /etc/nginx/sites-available/libertyengine && sudo rm -f /etc/nginx/sites-enabled/libertyengine && sudo mv ${tempPath} /etc/nginx/sites-available && sudo ln -s /etc/nginx/sites-available/libertyengine /etc/nginx/sites-enabled/libertyengine`);
+      execSync('sudo service nginx reload');
+    }
     console.log(colors.green('done'));
     process.exit(0);
   } catch (err) {
