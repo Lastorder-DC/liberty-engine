@@ -43,9 +43,9 @@ NOTE: Untested yet!
 ### Install MariaDB 10.x
 CentOS's MariaDB's version is 5.x, so you should add repo to install MariaDB 10+ at CentOS.
 
-#### Step 1.Remove MariaDB 5.x (If installed)
+#### Step 1.Remove MariaDB/MySQL 5.x (If installed)
 ```bash
-yum remove mariadb-server mariadb-libs
+yum remove mariadb-server mysql-server
 ```
 
 #### Step 2. Create Repo file
