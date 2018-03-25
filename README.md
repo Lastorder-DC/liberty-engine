@@ -127,7 +127,7 @@ server_names_hash_bucket_size 64;
 
 ### Install Node.JS
 ```bash
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+curl -sL https://rpm.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt install nodejs
 ```
 
