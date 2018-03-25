@@ -38,7 +38,9 @@ npm run setup
 ```
 
 ## Installation (CentOS)
-NOTE: Untested yet!
+Supported Version
+* CentOS 6 x86_64
+* CentOS 7 x86_64
 
 ### Install MariaDB 10.x
 CentOS's MariaDB's version is 5.x, so you should add repo to install MariaDB 10+ at CentOS.
@@ -70,17 +72,6 @@ gpgcheck=1
 [mariadb]
 name = MariaDB
 baseurl = http://yum.mariadb.org/10.1/centos6-amd64
-gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
-gpgcheck=1
-```
-
-**CentOS 6 x86**
-```
-# MariaDB 10.1 CentOS repository list - created 2018-03-24 12:21 UTC
-# http://downloads.mariadb.org/mariadb/repositories/
-[mariadb]
-name = MariaDB
-baseurl = http://yum.mariadb.org/10.1/centos6-x86
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 ```
