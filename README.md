@@ -118,7 +118,8 @@ sudo mkdir /etc/nginx/sites-available
 sudo mkdir /etc/nginx/sites-enabled
 ```
 
-Add following two lines at bottom of `nginx.conf` file
+Add following two lines at end of `http {}` block at `nginx.conf` file
+(Usually after `include /etc/nginx/conf.d/*.conf;`)
 ```nginx
 include /etc/nginx/sites-enabled/*.conf;
 server_names_hash_bucket_size 64;
