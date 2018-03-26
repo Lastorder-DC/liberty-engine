@@ -42,6 +42,8 @@ Supported Version
 * CentOS 6 x86_64
 * CentOS 7 x86_64
 
+CentOS 6 x86 is **NOT** supported.
+
 ### Install MariaDB 10.x
 CentOS's MariaDB's version is 5.x, so you should add repo to install MariaDB 10+ at CentOS.
 
