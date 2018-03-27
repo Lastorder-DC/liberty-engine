@@ -49,7 +49,7 @@ CentOS's MariaDB's version is 5.x, so you should add repo to install MariaDB 10+
 
 #### Step 1.Remove MariaDB/MySQL 5.x (If installed)
 ```bash
-yum remove mariadb-server mysql-server
+sudo yum remove mariadb-server mysql-server
 ```
 
 #### Step 2. Create Repo file
@@ -96,12 +96,12 @@ sudo yum install -y --enablerepo=epel mariadb-10.1-mroonga
 #### Step 1. Add nginx repo
 **CentOS 7**
 ```bash
-sudo rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+sudo yum install -y http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
 ```
 
 **CentOS 6**
 ```bash
-sudo rpm -Uvh http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+sudo yum install -y http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
 ```
 
 #### Step 2. Install Nginx & Configure server block
@@ -121,7 +121,7 @@ server_names_hash_bucket_size 64;
 ### Install Node.JS
 ```bash
 curl -sL https://rpm.nodesource.com/setup_8.x | sudo -E bash -
-sudo apt install nodejs
+sudo yum install -y nodejs
 ```
 
 ### Install and setup LibertyEngine
