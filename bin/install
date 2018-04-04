@@ -31,21 +31,6 @@ const colors = require('colors/safe');
       }
     }
     
-    const { createDbUser, createDatabase } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'createDatabase',
-        message: 'Do you want to create new database?',
-        default: true
-      },
-      {
-        type: 'confirm',
-        name: 'createDbUser',
-        message: 'Do you want to create mysql user?',
-        default: true
-      }
-    ]);
-    
     const { dbName, dbUsername, dbPassword, rootPassword } = await inquirer.prompt([
       {
         type: 'input',
@@ -61,22 +46,8 @@ const colors = require('colors/safe');
         type: 'password',
         name: 'dbPassword',
         message: 'database password'
-      },
-      {
-        type: 'password',
-        name: 'rootPassword',
-        message: 'database root password'
       }
     ]);
-    
-    if (createDatabase) {
-      execSync(`mysql -uroot -p${rootPassword} -e "create database ${dbName};"`);
-    }
-    if (createDbUser) {
-      execSync(`mysql -uroot -p${rootPassword} -e "create user '${dbUsername}'@'localhost' identified by '${dbPassword}';"`);
-    }
-    execSync(`mysql -uroot -p${rootPassword} -e "grant all privileges on ${dbName}.* to '${dbUsername}'@'localhost';"`);
-    execSync('mysql -uroot -p${rootPassword} -e "flush privileges;"');
     
     console.log(colors.green('User/DB setup is complete.'));
     const answers = await inquirer.prompt([
