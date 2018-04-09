@@ -174,10 +174,11 @@ const colors = require('colors/safe');
       const nginxConfig = nginxTemplate
         .replace(/\{\{server_name\}\}/g, answers.wikiDomain)
         .replace(/\{\{root_path\}\}/g, path.join(__dirname, '..'));
-      const tempPath = path.join(__dirname, 'libertyengine.conf');
+      const tempPath = path.join(__dirname, answers.wikiDomain + '.conf');
       if (existsSync(tempPath)) unlinkSync(tempPath);
       writeFileSync(tempPath, nginxConfig);
-      execSync(`sudo rm -f /etc/nginx/sites-available/libertyengine /etc/nginx/sites-available/libertyengine.conf && sudo rm -f /etc/nginx/sites-enabled/libertyengine /etc/nginx/sites-enabled/libertyengine.conf && sudo mv ${tempPath} /etc/nginx/sites-available && sudo ln -s /etc/nginx/sites-available/libertyengine.conf /etc/nginx/sites-enabled/libertyengine.conf`);
+      execSync(`sudo rm -f /etc/nginx/sites-available/${answers.wikiDomain}.conf && sudo rm -f /etc/nginx/sites-enabled/${answers.wikiDomain}.conf`);
+	  execSync(`sudo mv ${tempPath} /etc/nginx/sites-available && sudo ln -s /etc/nginx/sites-available/${answers.wikiDomain}.conf /etc/nginx/sites-enabled/${answers.wikiDomain}.conf`);
       execSync('sudo service nginx reload');
     }
     console.log(colors.green('done'));
